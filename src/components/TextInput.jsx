@@ -1,8 +1,12 @@
 import { useState } from "react";
 
-export default function Comp({label, password}) {
+export default function Comp({label, password, value, onChange}) {
   
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  function change(e) {
+    onChange(e.target.value);
+  }
+
+  const [isPasswordVisible, setIsPasswordVisible] = useState(!password);
 
   function togglePassword() {
     setIsPasswordVisible(!isPasswordVisible);
@@ -19,7 +23,7 @@ export default function Comp({label, password}) {
           </button>
         }
       </div>
-      <input className="outline-none border p-3 rounded-md border-purple-900" name="firstname" id="firstname" type={isPasswordVisible?"text":"password"} />
+      <input value={value} onChange={change} className="outline-none border p-3 rounded-md border-purple-900" name="firstname" id="firstname" type={isPasswordVisible?"text":"password"} />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router'
 import KayitSayfasi from './pages/KayitSayfasi.jsx'
@@ -14,7 +14,6 @@ function GirisYapilmisRouter() {
   } else {
     return <Navigate to="/giris" />
   }
-  
 }
 
 function GirisYapilmamisRouter() {
@@ -28,6 +27,13 @@ function GirisYapilmamisRouter() {
 
 
 function App() {
+
+  const ctx = useContext(ReactContext);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token") || '';
+    ctx.setPersistentToken(token);
+  }, [])
 
   return (
     <BrowserRouter>
