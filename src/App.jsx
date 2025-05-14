@@ -10,6 +10,8 @@ import { ReactContext } from './context.jsx';
 
 function GirisYapilmisRouter() {
   const ctx = useContext(ReactContext);
+  console.log("YES"+ctx.token);
+  
   if (ctx.token) {
     return <Outlet />
   } else {
@@ -19,6 +21,8 @@ function GirisYapilmisRouter() {
 
 function GirisYapilmamisRouter() {
   const ctx = useContext(ReactContext);
+  console.log("NO-" + ctx.token);
+
   if (!ctx.token) {
     return <Outlet />
   } else {
@@ -30,10 +34,6 @@ function GirisYapilmamisRouter() {
 function App() {
 
   const ctx = useContext(ReactContext);
-
-  useEffect(() => {
-    ctx.getPersistentUserData();
-  }, [])
 
   return (
     <BrowserRouter>

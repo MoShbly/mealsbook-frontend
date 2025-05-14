@@ -3,9 +3,12 @@ import TextInput from '../components/TextInput'
 import { ReactContext } from '../context';
 import axios from 'axios';
 import Message from '../components/Message';
+import ImageInput from '../components/ImageInput';
 
 export default function Page() {
   const ctx = useContext(ReactContext);
+
+  const [image, setImage] = useState("");
 
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -13,15 +16,33 @@ export default function Page() {
   const [password, setPassword] = useState("");
   const [deleteAccountPassword, setDeleteAccountPassword] = useState("");
 
+  const [imageError, setImageError] = useState("");
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [deleteAccountError, setDeleteAccountError] = useState("");
 
+  const [imageMsg, setImageMsg] = useState("");
   const [nameMsg, setNameMsg] = useState("");
   const [emailMsg, setEmailMsg] = useState("");
   const [passwordMsg, setPasswordMsg] = useState("");
   const [deleteAccountMsg, setDeleteAccountMsg] = useState("");
+
+  async function updateImage() {
+    try {
+      const response = await axios.post(`https://mealsbook-backend.vercel.app/users/changeImage`, {
+        authtoken: ctx.token,
+        newImage: image,
+      });
+
+      setImageMsg("Image Updated!");
+      setImageError("");
+      
+    } catch (error) {
+      setImageMsg("");
+      setImageError(error.response.data.message);
+    }
+  }
 
   async function updateName() {
     try {
@@ -92,10 +113,11 @@ export default function Page() {
 
     <div className="flex flex-col items-center">
       <form className="flex flex-col gap-5 p-5 w-fit min-w-120 mt-10">
-      {/* {Msg && <Message msg={Msg} type="success" />} */}
-      {/* {nameError && <Message msg={nameError} type="error" />} */}
+        {imageMsg && <Message msg={imageMsg} type="success" />}
+        {imageError && <Message msg={imageError} type="error" />}
         <h1 className="text-3xl text-center">Profile Image</h1>
-        <button type="button" className='outline-none border p-3 rounded-md border-purple-900 bg-purple-900 text-white hover:bg-purple-600 cursor-pointer' onClick={updateName}>Update Image</button>
+        <ImageInput value={image} onChange={setImage} label="image"/>
+        <button type="button" className='outline-none border p-3 rounded-md border-purple-900 bg-purple-900 text-white hover:bg-purple-600 cursor-pointer' onClick={updateImage}>Update Image</button>
       </form>
       
       <form className="flex flex-col gap-5 p-5 w-fit min-w-120 mt-10">

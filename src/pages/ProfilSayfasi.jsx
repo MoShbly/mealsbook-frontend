@@ -32,7 +32,7 @@ export default function Page() {
     <div className="flex">
 
       <div className="flex flex-col gap-10 items-center py-10 w-96">
-        <img className="rounded-full w-40" src={user.image || defaultProfileImage} alt="" />
+        <img className="rounded-full w-40 h-40" src={user.image || defaultProfileImage} alt="" />
         <div className="flex flex-col gap-2 text-center text-xl">
           <p className="text-purple-900">{user.firstname} {user.lastname}</p>
           <p>@{user.username}</p>
@@ -50,7 +50,6 @@ export default function Page() {
 
       <div className="bg-blue-500">
         <h1>Profil Sayfasi</h1>
-        <p>{JSON.stringify(user)}</p>
       </div>
 
     </div>

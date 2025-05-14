@@ -1,11 +1,12 @@
-import {createContext, useState} from 'react';
+import {createContext, useEffect, useState} from 'react';
 
 export const ReactContext = createContext();
 
 export default function ReactContextProvider({ children }) {
+  const userdata = JSON.parse(localStorage.getItem("userData") || null);
   
-  const [token, setToken] = useState('');
-  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(userdata?.token || "");
+  const [user, setUser] = useState(userdata || null);
   const [flashMessage, setFlashMessage] = useState("");
 
   function getPersistentUserData() {

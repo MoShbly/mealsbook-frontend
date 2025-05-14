@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Comp({label, password, value, onChange}) {
+export default function({label, password, value, onChange}) {
   
   function change(e) {
     onChange(e.target.value);
