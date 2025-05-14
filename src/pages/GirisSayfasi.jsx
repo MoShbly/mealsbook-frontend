@@ -22,7 +22,7 @@ export default function Page() {
       });
 
       const user = response.data.user;
-      ctx.setPersistentToken(user.token);
+      ctx.setPersistentUserData(user);
 
     } catch (error) {
       setError(error.response.data.message);

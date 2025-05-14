@@ -5,6 +5,7 @@ import KayitSayfasi from './pages/KayitSayfasi.jsx'
 import GirisSayfasi from './pages/GirisSayfasi.jsx'
 import AnaSayfa from './pages/AnaSayfa.jsx'
 import ProfilSayfasi from './pages/ProfilSayfasi.jsx'
+import ProfilGuncellemeSayfasi from './pages/ProfilGuncellemeSayfasi.jsx'
 import { ReactContext } from './context.jsx';
 
 function GirisYapilmisRouter() {
@@ -31,15 +32,13 @@ function App() {
   const ctx = useContext(ReactContext);
 
   useEffect(() => {
-    const token = localStorage.getItem("token") || '';
-    ctx.setPersistentToken(token);
+    ctx.getPersistentUserData();
   }, [])
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<AnaSayfa />} />
-        
 
         <Route element={<GirisYapilmamisRouter />}>
           <Route path="/kayit" element={<KayitSayfasi />} />
@@ -48,6 +47,7 @@ function App() {
 
         <Route element={<GirisYapilmisRouter />}>
           <Route path="/profil" element={<ProfilSayfasi />} />
+          <Route path="/profil/guncelleme" element={<ProfilGuncellemeSayfasi />} />
         </Route>
 
       </Routes>
