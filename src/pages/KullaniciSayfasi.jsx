@@ -1,20 +1,25 @@
 import { useContext, useEffect, useState } from "react";
 import { ReactContext } from "../context";
 import defaultProfileImage from '../assets/images/profileImage.png';
-import { Link } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import axios from "axios";
 import MealCard from "../components/MealCard";
 
 export default function Page() {
   const ctx = useContext(ReactContext);
-
+  const navigate = useNavigate();
+  const { username } = useParams();
   const [user, setUser] = useState({});
   const [meals, setMeals] = useState([]);
 
   useEffect(() => {
+    if (username == ctx.user.username) {
+      navigate("/profil")
+    }
+
     (async function() {
       try {
-        const response = await axios.get(`https://mealsbook-backend.vercel.app/users/profile/${ctx.user.username}`);
+        const response = await axios.get(`https://mealsbook-backend.vercel.app/users/profile/${username}`);
         setUser(response.data.user);
         setMeals(response.data.meals);
       } catch (error) {
@@ -23,6 +28,10 @@ export default function Page() {
     }());
   }, []);
 
+  function logout() {
+    ctx.setPersistentUserData(null);
+  }
+  
   return (
     <>
     <div className="flex flex-col p-10 gap-10 items-center">
@@ -35,11 +44,6 @@ export default function Page() {
             <p className="flex items-center gap-1"><span className="text-purple-900 text-2xl">{meals.length}</span> Meals</p>
             <p className="flex items-center gap-1"><span className="text-purple-900 text-2xl">{user.favs}</span> Favs</p>
           </div>
-        </div>
-        <div className="flex flex-col gap-2">
-          <Link to="/profil/guncelleme" className="rounded-md text-white bg-purple-700 py-3 px-6 text-center hover:bg-purple-900"> Profile Page </Link>
-          <Link to="/profil/favs" className="rounded-md text-white bg-purple-700 py-3 px-6 text-center hover:bg-purple-900"> Favorites </Link>
-          <Link to="/tarif/ekle" className="rounded-md text-white bg-purple-700 py-3 px-6 text-center hover:bg-purple-900"> Add New Meal </Link>
         </div>
       </div>
 
