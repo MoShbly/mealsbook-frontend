@@ -6,6 +6,8 @@ import Message from '../components/Message';
 import { Link, Outlet } from 'react-router';
 
 export default function Layout({ children }) {
+  const ctx = useContext(ReactContext);
+  
   function logout() {
     ctx.setPersistentUserData(null);
   }
